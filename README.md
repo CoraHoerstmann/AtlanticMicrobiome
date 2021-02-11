@@ -3,17 +3,18 @@
 Contributor: Cora Hoerstmann cora.hoerstmann@awi.de
 
 This is the github repository along our manuscript **"High-resolution oceanographic and microbial diversity analyses within trophic groups reveal new provincialism across the Atlantic Ocean"** 
-Cora Hörstmann 1) 2), Pier Luigi Buttigieg 3), Uwe John 1) 4), Eric Raes 5), Dieter Wolf-Gladrow 1), Anya M. Waite 6)
 
-1Alfred Wegener Institute Helmholtz Center for Polar and Marine Science, Bremerhaven, Germany
-2Department of Life Sciences and Chemistry, Jacobs University gGmbH, Bremen, Germany
-3Helmholtz Metadata Collaboration, GEOMAR, Kiel, Germany
-4Helmholtz Institute for Functional Marine Biodiversity, Oldenburg, Germany
-5CSIRO Oceans and Atmosphere, Hobart, Tasmania, Australia
-6Ocean Frontier Institute and Department of Oceanography, Dalhousie University, Halifax, NS, Canada
+Cora Hörstmann, Pier Luigi Buttigieg, Uwe John, Eric Raes, Dieter Wolf-Gladrow, Anya M. Waite
+
 
 
 Complete analysis is summarised in the RNotebook and html and as supplementary material to our submission. 
 
-Subfolders contain:
+
+#### Data availability:
+
+Chlorophyll a (chl a) data was derived from (https://doi.org/10.1594/PANGAEA.913514). Dissolved inorganic nutrients, Particulate organic matter and primary productivity measurements are publicly archived (https://doi.org/10.1594/PANGAEA.926458, https://doi.org/10.1594/PANGAEA.926460, and https://doi.org/10.1594/PANGAEA.926462, respectively). Sequence data for this study have been deposited in the European Nucleotide Archive (ENA) at EMBL-EBI under accession number PRJEB42499 (https://www.ebi.ac.uk/ena/browser/text-search?query=PRJEB42499), using the data brokerage service of the German Federation for Biological Data (GFBio, (63)), in compliance with the Minimal Information about any (X) Sequence (MIxS) standard (64). 
+
+
+#### Subfolders contain:
 
