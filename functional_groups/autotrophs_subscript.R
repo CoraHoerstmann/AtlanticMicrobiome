@@ -6,6 +6,26 @@ suppressPackageStartupMessages(require(tidyverse))
 mito <- taxonomy_18S
 mito$names <- rownames(mito)
 
+#autotrophic dinos
+
+Dino_auto_Pyrocystis <- mito%>%filter(str_detect(genus, "Pyrocystis"))%>%
+  cbind(manual_Tax_group = paste0("auto"))
+rownames(Dino_auto_Pyrocystis) <- Dino_auto_Pyrocystis$names
+
+Dino_auto_Alexandrium_insuetum <- mito%>%filter(str_detect(species, "Alexandrium_insuetum"))%>%
+  cbind(manual_Tax_group = paste0("auto"))
+rownames(Dino_auto_Alexandrium_insuetum) <- Dino_auto_Alexandrium_insuetum$names
+
+Dino_auto_Dissodinium_pseudolunula <- mito%>%filter(str_detect(species, "Dissodinium_pseudolunula"))%>%
+  cbind(manual_Tax_group = paste0("auto"))
+rownames(Dino_auto_Dissodinium_pseudolunula) <- Dino_auto_Dissodinium_pseudolunula$names
+
+Dino_auto_Protoceratium_reticulatum <- mito%>%filter(str_detect(species, "Protoceratium_reticulatum"))%>%
+  cbind(manual_Tax_group = paste0("auto"))
+rownames(Dino_auto_Protoceratium_reticulatum) <- Dino_auto_Protoceratium_reticulatum$names
+
+##
+
 Diatoms1 <- mito%>%filter(str_detect(class, "Bacillariophyta"))%>% #Stramenopiles/Ochrophyta
   cbind(manual_Tax_group = paste0("Diatom_(auto)"))
 rownames(Diatoms1) <- Diatoms1$names
@@ -46,8 +66,9 @@ green_Algae <- mito%>%filter(str_detect(phylum, "Chlorophyta"))%>% ##a lot of Ni
   cbind(manual_Tax_group = paste0("Chlorophyta_(auto)"))
 rownames(green_Algae) <- green_Algae$names
 
-d <- rbind(Diatoms1,Bolidophyceae,Phaeothamniophyceae,Pelagophyceae,Prymnesiales,Coccoliths,Calcihaptophycidae,Phaeocystales,Cryptophyceae,
-           green_Algae)
+d <- rbind(Dino_auto_Pyrocystis, Dino_auto_Alexandrium_insuetum, Dino_auto_Dissodinium_pseudolunula,
+           Dino_auto_Protoceratium_reticulatum, Diatoms1,Bolidophyceae,Phaeothamniophyceae,Pelagophyceae,
+           Prymnesiales,Coccoliths,Calcihaptophycidae,Phaeocystales,Cryptophyceae, green_Algae)
 rownames(d) <- d$rownames
 taxonomy_auto_euk <- d
 #filter abundance table accordingly
@@ -110,8 +131,9 @@ meta_auto_cyano <- meta.16S%>%dplyr::filter(Site %in% colnames(ASVCount_16S.tax.
  
  #clean up!
  
- rm(mito, mito_P, d, Diatoms1,Bolidophyceae,Phaeothamniophyceae,Pelagophyceae,Prymnesiales,Coccoliths,Calcihaptophycidae,Phaeocystales,Cryptophyceae,
-    green_Algae)
+ rm(mito, mito_P, d, Dino_auto_Pyrocystis, Dino_auto_Alexandrium_insuetum, Dino_auto_Dissodinium_pseudolunula,
+    Dino_auto_Protoceratium_reticulatum, Diatoms1,Bolidophyceae,Phaeothamniophyceae,Pelagophyceae,
+    Prymnesiales,Coccoliths,Calcihaptophycidae,Phaeocystales,Cryptophyceae, green_Algae)
  
  detach("package:tidyverse", unload=TRUE)
  
