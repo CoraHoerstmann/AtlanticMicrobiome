@@ -37,17 +37,27 @@ Dino_het_Cucumeridinium <- mito%>%filter(str_detect(genus, "Cucumeridinium"))%>%
   cbind(manual_Tax_group = paste0("het"))
 rownames(Dino_het_Cucumeridinium) <- Dino_het_Cucumeridinium$names
 
-Dino_het_Amoebophrya <- mito%>%filter(str_detect(genus, "Amoebophrya"))%>%
-  cbind(manual_Tax_group = paste0("het"))
-rownames(Dino_het_Amoebophrya) <- Dino_het_Amoebophrya$names
+#Dino_het_Amoebophrya <- mito%>%filter(str_detect(genus, "Amoebophrya"))%>% #Dino groupII
+#  cbind(manual_Tax_group = paste0("het"))
+#rownames(Dino_het_Amoebophrya) <- Dino_het_Amoebophrya$names
 
-Dino_het_Euduboscquella <- mito%>%filter(str_detect(genus, "Euduboscquella"))%>%
-  cbind(manual_Tax_group = paste0("het"))
-rownames(Dino_het_Euduboscquella) <- Dino_het_Euduboscquella$names
+#Dino_het_Euduboscquella <- mito%>%filter(str_detect(genus, "Euduboscquella"))%>% #Dino GroupI
+#  cbind(manual_Tax_group = paste0("het"))
+#rownames(Dino_het_Euduboscquella) <- Dino_het_Euduboscquella$names
 
 Dino_het_Hematodinium <- mito%>%filter(str_detect(genus, "Hematodinium"))%>%
   cbind(manual_Tax_group = paste0("het"))
 rownames(Dino_het_Hematodinium) <- Dino_het_Hematodinium$names
+
+Dino_het_GroupI <- mito%>%dplyr::filter(order == "Dino-Group-I")%>%
+  cbind(manual_Tax_group = paste0("het"))
+rownames(Dino_het_GroupI) <- Dino_het_GroupI$names
+
+Dino_het_GroupII <- mito%>%filter(order == "Dino-Group-II")%>%
+  cbind(manual_Tax_group = paste0("het"))
+rownames(Dino_het_GroupII) <- Dino_het_GroupII$names
+
+
 
 
 Dino_het_Abedinium_dasypus <- mito%>%filter(str_detect(species, "Abedinium_dasypus"))%>%
@@ -57,13 +67,6 @@ rownames(Dino_het_Abedinium_dasypus) <- Dino_het_Abedinium_dasypus$names
 Dino_het_Syndinium_turbo <- mito%>%filter(str_detect(species, "Syndinium_turbo"))%>%
   cbind(manual_Tax_group = paste0("het"))
 rownames(Dino_het_Syndinium_turbo) <- Dino_het_Syndinium_turbo$names
-
-
-
-
-
-
-
 
 
 ####
@@ -76,14 +79,33 @@ rownames(Telonemia) <- Telonemia$names
 Katablepharidophyta <- mito%>%filter(str_detect(phylum, "Katablepharidophyta"))%>%   #Hacrobia
   cbind(manual_Tax_group = paste0("Katablepharidophyta_(het)"))
 rownames(Katablepharidophyta) <- Katablepharidophyta$names
+
 Picozoa <- mito%>%filter(str_detect(phylum, "Picozoa"))%>%   #Hacrobia
   cbind(manual_Tax_group = paste0("Picozoa_(het)"))
 rownames(Picozoa) <- Picozoa$names
 #####ALVEOLATA
 
-Cili <-mito%>%filter(str_detect(phylum, "Cili"))%>% ##
-  cbind(manual_Tax_group = paste0("Ciliata_(het)")) #Alveolata
-rownames(Cili) <- Cili$names
+#Cili <-mito%>%filter(str_detect(phylum, "Cili"))%>% ##
+#  cbind(manual_Tax_group = paste0("Ciliata_(het)")) #Alveolata
+#rownames(Cili) <- Cili$names
+
+#het ciliates refined
+
+Tintinnida <- mito%>%filter(str_detect(order, "Tintinnida"))%>% #marine parasite within Alveolata
+  cbind(manual_Tax_group = paste0("het"))
+rownames(Tintinnida) <- Tintinnida$names
+
+Choreotrichida <- mito%>%filter(str_detect(order, "Choreotrichida"))%>% #marine parasite within Alveolata
+  cbind(manual_Tax_group = paste0("het"))
+rownames(Choreotrichida) <- Choreotrichida$names
+
+#Pelagostrobilidium <- mito%>%filter(str_detect(genus, "Pelagostrobilidium"))%>% #within Choreotrichida
+#  cbind(manual_Tax_group = paste0("het"))
+#rownames(Pelagostrobilidium) <- Pelagostrobilidium$names
+
+
+
+
 Apicomplexa <- mito%>%filter(str_detect(phylum, "Apicomplexa"))%>% #marine parasite within Alveolata
   cbind(manual_Tax_group = paste0("Apicomplexa_(parasite)"))
 rownames(Apicomplexa) <- Apicomplexa$names
@@ -130,9 +152,9 @@ rownames(Apusozoa) <- Apusozoa$names
 
 
 d <- rbind(Pseudofungi, Opalozoa, Sagenista, Dino_het_Kofoidinium, Dino_het_Gyrodinium, Dino_het_Protoperidinium,
-           Dino_het_Cucumeridinium, Dino_het_Amoebophrya, Dino_het_Euduboscquella, Dino_het_Hematodinium,
-           Dino_het_Abedinium_dasypus, Dino_het_Syndinium_turbo, Telonemia, Picozoa, Cili, Apicomplexa, Choanoflagellida,
-           Fungi, Mesomycetozoa, Endomyxa, Chaunacanthid, Gigartacon, Polycystinea)
+           Dino_het_Cucumeridinium, Dino_het_GroupI, Dino_het_GroupII, Dino_het_Hematodinium,
+           Dino_het_Abedinium_dasypus, Dino_het_Syndinium_turbo, Telonemia, Picozoa, Tintinnida, Choreotrichida, 
+           Apicomplexa, Choanoflagellida, Fungi, Mesomycetozoa, Endomyxa, Chaunacanthid, Gigartacon, Polycystinea, Apusozoa)
 
 rownames(d) <- d$rownames
 
@@ -197,8 +219,7 @@ meta_het_prok <- meta.16S%>%dplyr::filter(Site %in% colnames(ASVCount_16S.tax.he
 #clean up!
 
 rm(mito_P,mito, d, Pseudofungi, Opalozoa, Sagenista, Dino_het_Kofoidinium, Dino_het_Gyrodinium, Dino_het_Protoperidinium,
-   Dino_het_Cucumeridinium, Dino_het_Amoebophrya, Dino_het_Euduboscquella, Dino_het_Hematodinium,
-   Dino_het_Abedinium_dasypus, Dino_het_Syndinium_turbo, Telonemia, Picozoa, Cili, Apicomplexa, Choanoflagellida,
-   Fungi, Mesomycetozoa, Endomyxa, Chaunacanthid, Gigartacon, Polycystinea)
+   Dino_het_Cucumeridinium, Dino_het_Hematodinium,Dino_het_Abedinium_dasypus, Dino_het_Syndinium_turbo, Telonemia, Picozoa, 
+   Apicomplexa, Choanoflagellida, Fungi, Mesomycetozoa, Endomyxa, Chaunacanthid, Gigartacon, Polycystinea, Choreotrichida, Apusozoa, Tintinnida)
 
 detach("package:tidyverse", unload=TRUE)

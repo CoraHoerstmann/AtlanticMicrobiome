@@ -98,11 +98,28 @@ Chlorarachniophyceae <- mito%>%filter(str_detect(class, "Chlorarachniophyceae"))
   cbind(manual_Tax_group = paste0("Chlorarachniophyceae_(mixo)"))
 rownames(Chlorarachniophyceae) <- Chlorarachniophyceae$names
 
+
+##mixo ciliates
+
+Strombidium <- mito%>%filter(str_detect(genus, "Strombidium"))%>% ##Rhizaria/Cercozoa
+  cbind(manual_Tax_group = paste0("mixo"))
+rownames(Strombidium) <- Strombidium$names
+
+Pseudotontonia <- mito%>%filter(str_detect(genus, "Pseudotontonia"))%>% ##Rhizaria/Cercozoa
+  cbind(manual_Tax_group = paste0("mixo"))
+rownames(Pseudotontonia) <- Pseudotontonia$names
+
+Spirotontonia <- mito%>%filter(str_detect(genus, "Spirotontonia"))%>% ##Rhizaria/Cercozoa
+  cbind(manual_Tax_group = paste0("mixo"))
+rownames(Spirotontonia) <- Spirotontonia$names
+
+
+
 taxonomy_mixo <- rbind(Chrysophyceae, Dino_mixo_Takaya, Dino_mixo_Noctiluca, Dino_mixo_Margalefidinium, Dino_mixo_Blastodinium,
                        Dino_mixo_Dinophysis, Dino_mixo_Symbiodinium, Dino_mixo_Tripos, Dino_mixo_Goniodoma,
                        Dino_mixo_Fragilidium, Dino_mixo_Scrippsiella, Dino_mixo_Gonyaulax, Dino_mixo_Alexandrium_andersonii,
                        Dino_mixo_Amphidinium_gibbosum, Acanthochiasma, Acanthostaurus, Amphilonche_elongata,
-                       Symphyacanthida, Chlorarachniophyceae)
+                       Symphyacanthida, Chlorarachniophyceae,Strombidium, Pseudotontonia, Spirotontonia)
 
 rownames(taxonomy_mixo) <- taxonomy_mixo$rownames
 
@@ -145,7 +162,7 @@ rm(Chrysophyceae, Dino_mixo_Takaya, Dino_mixo_Noctiluca, Dino_mixo_Margalefidini
    Dino_mixo_Dinophysis, Dino_mixo_Symbiodinium, Dino_mixo_Tripos, Dino_mixo_Goniodoma,
    Dino_mixo_Fragilidium, Dino_mixo_Scrippsiella, Dino_mixo_Gonyaulax, Dino_mixo_Alexandrium_andersonii,
    Dino_mixo_Amphidinium_gibbosum, Acanthochiasma, Acanthostaurus, Amphilonche_elongata,
-   Symphyacanthida, Chlorarachniophyceae)
+   Symphyacanthida, Chlorarachniophyceae, Spirotontonia, Pseudotontonia)
 
 detach("package:tidyverse", unload=TRUE)
 
