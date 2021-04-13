@@ -6,7 +6,7 @@ setwd("C:/Users/choerstm/Documents/core_PS113/Flow_cytometry/")
 
 flow.raw <- read.csv("./PS113_all_Flow_samples.csv", sep = ";")
 meta <- read.csv("C:/Users/choerstm/Documents/core_PS113/Genomics/amplicon_data/Metadata/Metadata_genomics_all_all_cu.csv",
-                 header=TRUE, sep= ";")
+                 header=TRUE, sep= ",")
 
 prok_meta <- as.list(as.character(meta$Station))
 

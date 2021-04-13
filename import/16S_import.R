@@ -16,7 +16,7 @@ meta.16 <- meta.16[!grepl("PS113_16_S200_S119_", meta.16$Station),]
 #because we have different stations sometimes samples for 16S and 18S we have specific metadata files and a general one.
 
 meta_all.16 <- read.csv("./Metadata/Metadata_genomics_all_all_cu.csv",
-                     header=TRUE, sep= ";")
+                     header=TRUE, sep= ",")
 meta.all.meta <- meta_all.16
 meta.16$Site <- as.character(meta.16$Station)
 meta.16$Station <- NULL
@@ -24,7 +24,7 @@ meta.16$Station <- as.character(meta.16$Place)
 meta_all.16$Station <- as.character(meta_all.16$Station)
 
 #sort out the ADCP
-meta.16S <- right_join(meta_all.16[,c(2:15,23:39)],meta.16[,c(18:20)], by = "Station")
+meta.16S <- right_join(meta_all.16[,c(2:16,24:40)],meta.16[,c(18:20)], by = "Station")
 meta.16S <- left_join(meta.16S,flow.analysis[c(1,42,47:52)], by = "Station")
 rm(meta_all.16, meta.16)
 

@@ -10,14 +10,14 @@ meta.18 <- read.csv("./Metadata/Metadata_genomics_18S_PP.csv",
 #remove Station 193 (see ASV table)
 meta.18 <- meta.18[!grepl("PS113_18_S193_S114_", meta.18$X),]
 meta_all.18 <- read.csv("./Metadata/Metadata_genomics_all_all_cu.csv",
-                     header=TRUE, sep= ";")
+                     header=TRUE, sep= ",")
 
 meta.18$Site <- as.character(meta.18$X)
 meta.18$Station <- as.character(meta.18$Station)
 meta_all.18$Station <- as.character(meta_all.18$Station)
 
 #sort out the ADCP
-meta.18S <- left_join(meta.18[,c(2,19:20)], meta_all.18[,c(2:15,23:37,39)], by = "Station")
+meta.18S <- left_join(meta.18[,c(2,19:20)], meta_all.18[,c(2:16,24:38,40)], by = "Station")
 meta.18S <- left_join(meta.18S,flow.analysis[c(1,42,47:52)], by = "Station") #add the cell data
 
 meta.18S$Site <-  gsub("_$","", meta.18S$Site)
