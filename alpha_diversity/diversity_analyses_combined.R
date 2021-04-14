@@ -56,10 +56,10 @@ meta_het_prok.1 <- meta_het_prok%>%
 
 ##join the table
 
-meta_functions <- dplyr::inner_join(meta_auto_euk.1, meta_auto_cyano.1[c(32,40:42)], by = "Site")
-meta_functions <- dplyr::inner_join(meta_functions, meta_mixo.1[c(3,40:42)], by = "Site")
-meta_functions <- dplyr::inner_join(meta_functions, meta_het_euk.1[c(3,40:42)], by = "Site")
-meta_functions <- dplyr::inner_join(meta_functions, meta_het_prok.1[c(32,40:42)], by = "Site")
+meta_functions <- dplyr::inner_join(meta_auto_euk.1, meta_auto_cyano.1[c(33,41:43)], by = "Site")
+meta_functions <- dplyr::inner_join(meta_functions, meta_mixo.1[c(3,41:43)], by = "Site")
+meta_functions <- dplyr::inner_join(meta_functions, meta_het_euk.1[c(3,41:43)], by = "Site")
+meta_functions <- dplyr::inner_join(meta_functions, meta_het_prok.1[c(33,41:43)], by = "Site")
 
 #clean up
 rm(meta_auto_cyano.1, meta_auto_euk.1, meta_het_euk.1, meta_het_prok.1, meta_mixo.1)
