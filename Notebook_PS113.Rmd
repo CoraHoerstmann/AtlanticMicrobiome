@@ -30,6 +30,44 @@ require("ggplot2")
 require("dplyr")
 ```
 
+#### ** Supplementary ASV quality control**
+
+```{r}
+library(hrbrthemes)
+library(dplyr)
+library(tidyr)
+library(viridis)
+
+
+sequencing_statistics <- read.csv("C:/Users/choerstm/Documents/core_PS113/Submission_EnvironmentalMicrobiology/Table_S7_sequencing_statistics.csv", sep = ";")
+
+seq_stats_16S <- sequencing_statistics[c(1:131),]
+seq_stats_18S <- sequencing_statistics[c(132:262),]
+
+seq_stats_16S_long <- gather(seq_stats_16S, step, number_reads, input:nonchim, factor_key=TRUE) 
+seq_stats_18S_long <- gather(seq_stats_18S, step, number_reads, input:nonchim, factor_key=TRUE) 
+
+a <- ggplot(seq_stats_16S_long, aes(x=number_reads, group=step, fill=step))+
+    geom_density(adjust=1.5, alpha=.3) +
+    theme_ipsum()
+
+b <- ggplot(seq_stats_18S_long, aes(x=number_reads, group=step, fill=step))+
+    geom_density(adjust=1.5, alpha=.3) +
+    theme_ipsum()
+
+print(a)
+print(b)
+
+#clean up!
+
+rm(a,b, seq_stats_16S, seq_stats_16S_long, seq_stats_18S, seq_stats_18S_long, sequencing_statistics)
+
+```
+
+
+
+
+
 #### **Primary Productivity and nutrients**
 
 ```{r pp, echo=TRUE}
@@ -66,14 +104,16 @@ G(x) is the geometric mean of x. The clr transformed values can be used as input
 
 ```{r, echo=TRUE}
 source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/general_clr_hellinger_transformation.R")
-#hellinger transformation
-ASVCount_16S.tax.hellinger <- hellinger(ASVCount_16S.tax,3)
-ASVCount_16S.tax.hellinger <- as.data.frame(ASVCount_16S.tax.hellinger)#the 3 is the chosen rowsum cutoff
-ASVCount_18S.tax.hellinger <- hellinger(ASVCount_18S.tax,3)
-ASVCount_18S.tax.hellinger <- as.data.frame(ASVCount_18S.tax.hellinger)
+
 #clr transformations
 ASVCount_16S.tax.clr <- clr(ASVCount_16S.tax,3)#the 3 is the chosen rowsum cutoff
 ASVCount_18S.tax.clr <- clr(ASVCount_18S.tax,3)
+
+
+#aitchinson distance
+ASV_Aitchinson_dist_16S <- dczm(ASVCount_16S.tax,3)
+ASV_Aitchinson_dist_18S <- dczm(ASVCount_18S.tax,3)
+
 ```
 
 #### **functional subsetting**
@@ -88,6 +128,18 @@ source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/autotrophs_subs
 source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/mixotrophs_subset.R", encoding = "UTF-8")
 source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/heterotrophs_subset.R", encoding = "UTF-8")
 ```
+
+
+# aitchinson distance from functional groups
+```{r}
+ASVCount_16S.tax.auto_ait <- dczm(ASVCount_16S.tax.auto, 3)
+ASVCount_18S.tax.auto_ait <- dczm(ASVCount_18S.tax.auto, 3)
+ASVCount_18S.tax.mixo_ait <- dczm(ASVCount_mixo, 3)
+ASVCount_16S.tax.het_ait <- dczm(ASVCount_16S.tax.het, 3)
+ASVCount_18S.tax.het_ait <- dczm(ASVCount_18S.tax.het, 3)
+```
+
+
 
 #### **calculate the alpha diversity and bind the estimates to the metadata table** 
 
@@ -143,9 +195,20 @@ meta.all.meta_provinces <- meta.all.meta%>%dplyr::group_by(province)%>%
 
 z scoring needs to be done when metadata with different value distributions are done. in z-scoring the mean of the datavaraible is shifted to 0.
 
-```{r zscore, echo=TRUE}
+
+histograms of selected metadata to check for normal distribution. 
+```{r}
 z_score <- c("salinity", "SST", "PO4_umol.l", "Si_umol.l", "NO2_umol.l", "NO3_umol.l", "oxygen.umol.l.", "Total.N..nmol.L.", "Total.C..nmol.L.", "C.N.Molar", "Distance_coast.km.", "chlorophyll")#, "Richness", "Shannon", "Simpson")
-z_score_PP <- c("salinity", "SST", "PO4_umol.l", "Si_umol.l", "NO2_umol.l", "NO3_umol.l", "oxygen.umol.l.", "Total.N..nmol.L.", "Total.C..nmol.L.", "C.N.Molar", "Distance_coast.km.", "PPAVG", "chlorophyll") # "Richness", "Shannon", "Simpson",
+z_score_PP <- c("salinity", "SST", "PO4_umol.l", "Si_umol.l", "NO2_umol.l", "NO3_umol.l", "oxygen.umol.l.", "Total.N..nmol.L.", "Total.C..nmol.L.", "C.N.Molar", "Distance_coast.km.", "PPAVG", "chlorophyll")
+
+source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/histogram_metadata.R")
+
+```
+
+
+
+```{r zscore, echo=TRUE}
+
 source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/z-scoring_subset.R")
 ```
 
@@ -159,12 +222,6 @@ list_ASVCounts <- sapply(ls(pattern="ASVCount_"), function(x) get(x), simplify =
 rm(list = ls(pattern="ASVCount_"))
 list_div <- sapply(ls(pattern="div_"), function(x) get(x), simplify = FALSE)
 rm(list = ls(pattern="div_"))
-```
-
-
-```{r hellinger_matrix, echo=FALSE}
-#turn hellinger transformations into matrix
-source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/Hellinger_matrix_tranformation.R")
 ```
 
 
@@ -293,6 +350,7 @@ meta_PCoA(list_meta$meta_functions.z[me_data],list_meta$meta_functions.z["provin
 meta_PCoA(list_meta$meta_functions.PP.z[me_data_PP],list_meta$meta_functions.PP.z["province"], list_meta$meta_functions.PP.z["Site"])
 rm(meta_sub, meta_sub_PP, me_data, me_data_PP)
 ```
+#load("~/core_PS113/Genomics/RScripts/20210419_workspace.RData")
 
 ### **RDA of functions**
 ```{r RDA, echo=FALSE, fig.width=6,fig.height=5, fig.show="hold", out.width="50%"}
@@ -301,9 +359,9 @@ source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/RDAs_functions.
 RDA_meta <- c("Site","province", "geo_current", "SST", "salinity", "distance_to_province_boundary.km.", "Distance_coast.km.", "oxygen.umol.l.","NO3_umol.l","PO4_umol.l","Total.N..nmol.L.", "Total.C..nmol.L.", "chlorophyll")
 RDA_meta_PP <- c("Site","province", "geo_current", "SST", "salinity", "distance_to_province_boundary.km.", "Distance_coast.km.", "oxygen.umol.l.","NO3_umol.l","PO4_umol.l","Total.N..nmol.L.", "Total.C..nmol.L.", "chlorophyll", "PPAVG")
 #all
-RDA_plots(list_meta$meta_auto_euk.z[c(RDA_meta)], list_ASVCounts$ASVCount_18S.tax.auto.clr, list_ASVCounts$ASVCount_18S.tax.auto.hellinger)
-RDA_plots(list_meta$meta_auto_cyano.z[c(RDA_meta)], list_ASVCounts$ASVCount_16S.tax.auto.clr, list_ASVCounts$ASVCount_16S.tax.auto.hellinger)
-RDA_plots(list_meta$meta_mixo.z[c(RDA_meta)], list_ASVCounts$ASVCount_mixo.clr, list_ASVCounts$ASVCount_mixo.hellinger)
+RDA_plots(list_meta$meta_auto_euk.z[c(RDA_meta)], list_ASVCounts$ASVCount_18S.tax.auto.clr, list_ASVCounts$ASVCount_18S.tax.auto_ait)
+RDA_plots(list_meta$meta_auto_cyano.z[c(RDA_meta)], list_ASVCounts$ASVCount_16S.tax.auto.clr, list_ASVCounts$ASVCount_16S.tax.auto_ait)
+RDA_plots(list_meta$meta_mixo.z[c(RDA_meta)], list_ASVCounts$ASVCount_mixo.clr, list_ASVCounts$)
 RDA_plots(list_meta$meta_het_euk.z[c(RDA_meta)], list_ASVCounts$ASVCount_18S.tax.het.clr, list_ASVCounts$ASVCount_18S.tax.het.hellinger)
 RDA_plots(list_meta$meta_het_prok.z[c(RDA_meta)], list_ASVCounts$ASVCount_16S.tax.het.clr, list_ASVCounts$ASVCount_16S.tax.het.hellinger)
 #PP
@@ -312,5 +370,18 @@ RDA_plots(list_meta$meta_auto_cyano.PP.z[c(RDA_meta_PP)], list_ASVCounts$ASVCoun
 RDA_plots(list_meta$meta_mixo.PP.z[c(RDA_meta_PP)], list_ASVCounts$ASVCount_mixo.PP.clr, list_ASVCounts$ASVCount_mixo.PP.hellinger)
 RDA_plots(list_meta$meta_het_euk.PP.z[c(RDA_meta_PP)], list_ASVCounts$ASVCount_het_euk.PP.clr, list_ASVCounts$ASVCount_het_euk.PP.hellinger)
 RDA_plots(list_meta$meta_het_prok.PP.z[c(RDA_meta_PP)], list_ASVCounts$ASVCount_het_prok.PP.clr, list_ASVCounts$ASVCount_het_prok.PP.hellinger)
+```
+```{r}
+PL_div <- read.csv("C:/Users/choerstm/Documents/core_PS113/General_results/Supplementary/PL_diversity.csv")
+
+#plot the diversity against the PL
+PL_div%>%
+  ggplot()+
+  geom_point(aes(x=PL_km, y=Average_auto.euk, color=Province))
+
+plot(PL_div$PL_km, PL_div$Average_auto.euk)
+
+
+
 ```
 
