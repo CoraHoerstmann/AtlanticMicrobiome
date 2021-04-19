@@ -1,5 +1,5 @@
 
-RDA_plots <- function(meta, ASV.clr, ASV.hellinger){
+RDA_plots <- function(meta, ASV.clr, ASV.aitchinson){
   
   #load additional packages
   suppressPackageStartupMessages(require("ggords"))
@@ -82,12 +82,14 @@ a <- function(mean_p){
    return(mylist)
    
 }
-#print(a(mean_p)) #activate this command for ordination distances
+print(a(mean_p)) #activate this command for ordination distances
 
 ###print the distances between sites in the CNRY province
 
-CNRY <- as%>%dplyr::filter(province == "CNRY")
+CNRY <- as%>%dplyr::filter(province == "SATL-COLD")
 
+#CNRY_1 <- CNRY[c(1:15),]
+#CNRY_2 <- CNRY[c(14:29),]
 b <- function(CNRY){
   mylist <- list()
   k <- 1 #create an object as another counter
@@ -103,8 +105,7 @@ b <- function(CNRY){
 }
 
 
-
-#print(b(CNRY)) #activate this command for ordination distances within CNRY province
+print(b(CNRY)) #activate this command for ordination distances within CNRY province
 
 
 
@@ -124,22 +125,21 @@ print(inertia.rda.constrained.prop)
 
 #par(xpd=TRUE)
 #provinces
-print(ggrda(ASV.clr.rda,group = grl, spearrow = NULL, farrow = 0.1, fzoom = 5, ellipse = T, scaling = 2, spe = F, obslab = T, obssize = 2)+
+print(ggrda(ASV.clr.rda,group = grl, spearrow = NULL, farrow = 0.1, fzoom = 5, ellipse = T, scaling = 2, spe = F)+
   scale_color_manual(name = "Groups",values = c("#A64995", "#BDD014", "#442D87", "#2B62FC", "#A331A0", "#720E34", "#CEC521", "#D80E51","#3FE8E0", "#E85105", "#E58910")) +
   scale_shape_manual(name = "Groups",values = c(16,16,16,16,16,16,16,16,16,16,16))) #for station names include: obslab = T, obssize = 2
 
 #province PERMANOVA
-ASV.hellinger.t <- t(ASV.hellinger)
+ASV.ait.t <- t(ASV.aitchinson)
 
 print(adonis2(
-  formula = ASV.hellinger.t ~ province,
+  formula = ASV.ait.t ~ province,
   data = meta,
   method = "bray"
 ))
 
 
-dis <- vegdist(ASV.hellinger.t, method = "bray")
-mod <- betadisper(dis, meta$province)
+mod <- betadisper(ASV.aitchinson, meta$province)
 
 print(mod)
 
