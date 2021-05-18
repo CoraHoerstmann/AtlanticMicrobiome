@@ -4,8 +4,9 @@ RDA_plots <- function(meta, ASV.clr, ASV.aitchinson){
   #load additional packages
   suppressPackageStartupMessages(require("ggords"))
   suppressPackageStartupMessages(require("vegan"))
+  require(PERMANOVA)
   library(gridExtra)
-  
+  require(raster)
 
 ##ASV data prep (sorting according to metadata)
 ASV.clr.t <- t(ASV.clr)
@@ -44,7 +45,7 @@ mx <- aggregate(as[,1], list(as$province), mean)
 my <- aggregate(as[,2], list(as$province), mean)
 
 #WTRA_p <- WTRA[,1:2]
-require(raster)
+
 #plot(WTRA$RDA1, WTRA$RDA2)
 #plot(mx, my, pch = 3)
 
@@ -86,7 +87,7 @@ print(a(mean_p)) #activate this command for ordination distances
 
 ###print the distances between sites in the CNRY province
 
-CNRY <- as%>%dplyr::filter(province == "SATL-COLD")
+CNRY <- as%>%dplyr::filter(province == "NADR")
 
 #CNRY_1 <- CNRY[c(1:15),]
 #CNRY_2 <- CNRY[c(14:29),]
@@ -105,7 +106,7 @@ b <- function(CNRY){
 }
 
 
-print(b(CNRY)) #activate this command for ordination distances within CNRY province
+#print(b(CNRY)) #activate this command for ordination distances within CNRY province
 
 
 
@@ -130,14 +131,31 @@ print(ggrda(ASV.clr.rda,group = grl, spearrow = NULL, farrow = 0.1, fzoom = 5, e
   scale_shape_manual(name = "Groups",values = c(16,16,16,16,16,16,16,16,16,16,16))) #for station names include: obslab = T, obssize = 2
 
 #province PERMANOVA
-ASV.ait.t <- t(ASV.aitchinson)
+#ASV.ait.t <- t(ASV.aitchinson)
 
 print(adonis2(
-  formula = ASV.ait.t ~ province,
+  formula = ASV.aitchinson ~ province,
   data = meta,
-  method = "bray"
+  method = "euclidean"
 ))
 
+
+m_L_CHL <- meta%>%dplyr::filter(province %in% L_CHL)%>%cbind(chl_type = paste0("L_CHL"))
+m_H_CHL <- meta%>%dplyr::filter(province %in% H_CHL)%>%cbind(chl_type = paste0("H_CHL"))
+
+meta_c <- rbind(m_L_CHL, m_H_CHL)
+
+ASV.aitchinson_r <- as.matrix(ASV.aitchinson)
+ASV.aitchinson_r <- ASV.aitchinson_r%>%dplyr::select(meta_c$Site)
+print(adonis2(
+  formula = ASV.aitchinson ~ chl_type,
+  data = meta_c,
+  method = "euclidean"
+))
+
+#meta$province <- as.factor(meta$province)
+#rownames(meta) <- meta$Site
+#PERMANOVA(ASV.aitchinson, meta["province"])
 
 mod <- betadisper(ASV.aitchinson, meta$province)
 
