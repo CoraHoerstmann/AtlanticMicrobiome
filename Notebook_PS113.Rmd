@@ -39,7 +39,7 @@ library(tidyr)
 library(viridis)
 
 
-sequencing_statistics <- read.csv("C:/Users/choerstm/Documents/core_PS113/Submission_EnvironmentalMicrobiology/Table_S7_sequencing_statistics.csv", sep = ";")
+sequencing_statistics <- read.csv("C:/Users/choerstm/Documents/core_PS113/Submission_EnvironmentalMicrobiology/Table_S8_sequencing_statistics.csv", sep = ";")
 
 seq_stats_16S <- sequencing_statistics[c(1:131),]
 seq_stats_18S <- sequencing_statistics[c(132:262),]
@@ -277,7 +277,7 @@ corelation_plot(meta_SATL_hot[subselection_PP], "SATL-HOT")
 corelation_plot(meta_WTRA[subselection_PP], "WTRA")
 #corelation_plot(meta_NATR[subselection_PP], "NATR")
 corelation_plot(meta_CNRY[subselection_PP], "CNRY")
-corelation_plot(meta_NAST[subselection_PP], "NAST-E")
+#corelation_plot(meta_NAST[subselection_PP], "NAST-E")
 corelation_plot(meta_NADR[subselection_PP], "NADR")
 ```
 
@@ -368,6 +368,7 @@ RDA_plots(list_meta$meta_auto_cyano.z[c(RDA_meta)], list_ASVCounts$ASVCount_16S.
 RDA_plots(list_meta$meta_mixo.z[c(RDA_meta)], list_ASVCounts$ASVCount_mixo.clr, list_ASVCounts$ASVCount_18S.tax.mixo_ait)
 RDA_plots(list_meta$meta_het_euk.z[c(RDA_meta)], list_ASVCounts$ASVCount_18S.tax.het.clr, list_ASVCounts$ASVCount_18S.tax.het_ait)
 RDA_plots(list_meta$meta_het_prok.z[c(RDA_meta)], list_ASVCounts$ASVCount_16S.tax.het.clr, list_ASVCounts$ASVCount_16S.tax.het_ait)
+
 #PP
 #RDA_plots(list_meta$meta_auto_euk.PP.z[c(RDA_meta_PP)], list_ASVCounts$ASVCount_auto_euk.PP.clr, list_ASVCounts$ASVCount_auto_euk.PP.hellinger)
 #RDA_plots(list_meta$meta_auto_cyano.PP.z[c(RDA_meta_PP)], list_ASVCounts$ASVCount_auto_cyano.PP.clr, list_ASVCounts$ASVCount_auto_cyano.PP.hellinger)
@@ -375,167 +376,16 @@ RDA_plots(list_meta$meta_het_prok.z[c(RDA_meta)], list_ASVCounts$ASVCount_16S.ta
 #RDA_plots(list_meta$meta_het_euk.PP.z[c(RDA_meta_PP)], list_ASVCounts$ASVCount_het_euk.PP.clr, list_ASVCounts$ASVCount_het_euk.PP.hellinger)
 #RDA_plots(list_meta$meta_het_prok.PP.z[c(RDA_meta_PP)], list_ASVCounts$ASVCount_het_prok.PP.clr, list_ASVCounts$ASVCount_het_prok.PP.hellinger)
 ```
+```{r procrustes, fig.show='hide'}
+source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/reduced_ASV_tables.R")
+source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/procrustes_RDA.R")
+
+```
 
 
-```{r}
+```{r PL_fig2, echo=FALSE, fig.width=6,fig.height=5, fig.show="hold", out.width="50%"}
 
-source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/PL_aitchinson_distance.R")
-ait_auto_16S <-PL_functional_groups(list_ASVCounts$ASVCount_16S.tax.auto_ait,list_meta$meta_functions.PP)
-ait_auto_18S <-PL_functional_groups(list_ASVCounts$ASVCount_18S.tax.auto_ait,list_meta$meta_functions.PP)
-ait_mixo <-PL_functional_groups(list_ASVCounts$ASVCount_18S.tax.mixo_ait,list_meta$meta_functions.PP)
-ait_het_16S <-PL_functional_groups(list_ASVCounts$ASVCount_16S.tax.het_ait,list_meta$meta_functions.PP)
-ait_het_18S <-PL_functional_groups(list_ASVCounts$ASVCount_18S.tax.het_ait,list_meta$meta_functions.PP)
-
-ait_auto_16S <-ait_auto_16S%>%cbind(manual_Tax_group = paste0("auto_16S"))
-ait_auto_18S <-ait_auto_18S%>%cbind(manual_Tax_group = paste0("auto_18S"))
-ait_mixo <-ait_mixo%>%cbind(manual_Tax_group = paste0("mixo"))
-ait_het_16S <-ait_het_16S%>%cbind(manual_Tax_group = paste0("het_16S"))
-ait_het_18S <-ait_het_18S%>%cbind(manual_Tax_group = paste0("het_18S"))
-
-ait_all <- rbind(ait_auto_16S, ait_auto_18S, ait_mixo, ait_het_16S, ait_het_18S)
-
-#select only neighbouring stations
-ait_aut_16S_red <- ait_auto_16S[-c(2,4,5:8,10:32, 36:47, 49:71, 74:81, 83:98, 101:133, 136:149, 152:175, 176:181, 184:209, 212:238, 241:265, 268:293, 296:321, 324:349, 351:368, 370:381, 384:393, 396: 400, 402),]
-
-ait_aut_18S_red <- ait_auto_18S[-c(2,4,5:8,10:32, 36:47, 49:71, 74:81, 83:98, 101:133, 136:149, 152:175, 176:181, 184:209, 212:238, 241:265, 268:293, 296:321, 324:349, 351:368, 370:381, 384:393, 396: 400, 402),]
-
-ait_mixo_red <- ait_mixo[-c(2,4,5:8,10:32, 36:47, 49:71, 74:81, 83:98, 101:133, 136:149, 152:175, 176:181, 184:209, 212:238, 241:265, 268:293, 296:321, 324:349, 351:368, 370:381, 384:393, 396: 400, 402),]
-
-ait_het_16S_red <- ait_het_16S[-c(2,4,5:8,10:32, 36:47, 49:71, 74:81, 83:98, 101:133, 136:149, 152:175, 176:181, 184:209, 212:238, 241:265, 268:293, 296:321, 324:349, 351:368, 370:381, 384:393, 396: 400, 402),]
-
-ait_het_18S_red <- ait_het_18S[-c(2,4,5:8,10:32, 36:47, 49:71, 74:81, 83:98, 101:133, 136:149, 152:175, 176:181, 184:209, 212:238, 241:265, 268:293, 296:321, 324:349, 351:368, 370:381, 384:393, 396: 400, 402),]
-
-ait_all <- rbind(ait_aut_16S_red, ait_aut_18S_red, ait_mixo_red, ait_het_16S_red, ait_het_18S_red)
-
-fit <- lm(distance ~ biomass_transport + manual_Tax_group, data = ait_all)
-
-aa <-ait_all%>%
-  ggplot(aes(x=biomass_transport, y=distance, color=province, shape=manual_Tax_group))+
-  #geom_smooth(se = FALSE)+
-  geom_point()+
-  scale_color_manual(values=c("#A64995", "#BDD014", "#2B62FC", "#A331A0", "#CEC521", "#D80E51", "#E85105", "#E58910"))+
-  theme(axis.title.x = element_text(size=16, vjust = 0.3),
-        axis.title.y = element_text(size=16, vjust = 0.3),
-        axis.text.y = element_text(size=16, vjust = 0.3),
-        axis.text.x = element_text(size=16, vjust = 0.3, angle = 90),
-        legend.text = element_text(size=16, vjust = 0.3),
-        legend.title = element_text(size=16, vjust = 0.3),
-        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
-print(aa)
-
-
-
-a <-ait_aut_18S_red%>%dplyr::filter(!province == "BRAZ")%>%
-  ggplot()+
-  geom_point(aes(x=biomass_transport, y=distance, color=province))+
-  scale_color_manual(values=c("#A64995", "#BDD014", "#2B62FC", "#A331A0", "#CEC521", "#D80E51", "#E85105", "#E58910"))+
-  theme(axis.title.x = element_text(size=16, vjust = 0.3),
-        axis.title.y = element_text(size=16, vjust = 0.3),
-        axis.text.y = element_text(size=16, vjust = 0.3),
-        axis.text.x = element_text(size=16, vjust = 0.3, angle = 90),
-        legend.text = element_text(size=16, vjust = 0.3),
-        legend.title = element_text(size=16, vjust = 0.3),
-        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
-print(a)
-
-b <-ait_aut_16S_red%>%dplyr::filter(!province == "BRAZ")%>%
-  ggplot()+
-  geom_point(aes(x=biomass_transport, y=distance, color=province))+
-  scale_color_manual(values=c("#A64995", "#BDD014", "#2B62FC", "#A331A0", "#CEC521", "#D80E51", "#E85105", "#E58910"))+
-  theme(axis.title.x = element_text(size=16, vjust = 0.3),
-        axis.title.y = element_text(size=16, vjust = 0.3),
-        axis.text.y = element_text(size=16, vjust = 0.3),
-        axis.text.x = element_text(size=16, vjust = 0.3, angle = 90),
-        legend.text = element_text(size=16, vjust = 0.3),
-        legend.title = element_text(size=16, vjust = 0.3),
-        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
-print(b)
-
-c <-ait_mixo_red%>%dplyr::filter(!province == "BRAZ")%>%
-  ggplot()+
-  geom_point(aes(x=biomass_transport, y=distance, color=province))+
-  scale_color_manual(values=c("#A64995", "#BDD014", "#2B62FC", "#A331A0", "#CEC521", "#D80E51", "#E85105", "#E58910"))+
-  theme(axis.title.x = element_text(size=16, vjust = 0.3),
-        axis.title.y = element_text(size=16, vjust = 0.3),
-        axis.text.y = element_text(size=16, vjust = 0.3),
-        axis.text.x = element_text(size=16, vjust = 0.3, angle = 90),
-        legend.text = element_text(size=16, vjust = 0.3),
-        legend.title = element_text(size=16, vjust = 0.3),
-        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
-print(c)
-
-d <-ait_het_18S_red%>%dplyr::filter(!province == "BRAZ")%>%
-  ggplot()+
-  geom_point(aes(x=biomass_transport, y=distance, color=province))+
-  scale_color_manual(values=c("#A64995", "#BDD014", "#2B62FC", "#A331A0", "#CEC521", "#D80E51", "#E85105", "#E58910"))+
-  theme(axis.title.x = element_text(size=16, vjust = 0.3),
-        axis.title.y = element_text(size=16, vjust = 0.3),
-        axis.text.y = element_text(size=16, vjust = 0.3),
-        axis.text.x = element_text(size=16, vjust = 0.3, angle = 90),
-        legend.text = element_text(size=16, vjust = 0.3),
-        legend.title = element_text(size=16, vjust = 0.3),
-        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
-print(d)
-
-e <-ait_het_16S_red%>%dplyr::filter(!province == "BRAZ")%>%
-  ggplot()+
-  geom_point(aes(x=biomass_transport, y=distance, color=province))+
-  scale_color_manual(values=c("#A64995", "#BDD014", "#2B62FC", "#A331A0", "#CEC521", "#D80E51", "#E85105", "#E58910"))+
-  theme(axis.title.x = element_text(size=16, vjust = 0.3),
-        axis.title.y = element_text(size=16, vjust = 0.3),
-        axis.text.y = element_text(size=16, vjust = 0.3),
-        axis.text.x = element_text(size=16, vjust = 0.3, angle = 90),
-        legend.text = element_text(size=16, vjust = 0.3),
-        legend.title = element_text(size=16, vjust = 0.3),
-        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
-print(e)
-
-
-#select
-
-#long format
-
-#merge province tables
-
-#remove those with 0
-
-#plot
-
-PL_div <- read.csv("C:/Users/choerstm/Documents/core_PS113/General_results/Supplementary/PL_diversity.csv")
-
-#turn into long format
-PL_average <- PL_div[, c(1:3,6,9,12,15,18)]
-
-PL_long <- gather(PL_average, key = "functional_group", value = "div_distance",
-       Average_auto.euk, Average.auto.cyano, Average.mixo, Average.euk.het, Average.prok.het)
-
-e <-PL_long%>%
-  ggplot()+
-  geom_point(aes(x=biomass_transport, y=distance, color=province))+
-  scale_color_manual(values=c("#A64995", "#BDD014", "#2B62FC", "#A331A0", "#CEC521", "#D80E51", "#E85105", "#E58910"))+
-  theme(axis.title.x = element_text(size=16, vjust = 0.3),
-        axis.title.y = element_text(size=16, vjust = 0.3),
-        axis.text.y = element_text(size=16, vjust = 0.3),
-        axis.text.x = element_text(size=16, vjust = 0.3, angle = 90),
-        legend.text = element_text(size=16, vjust = 0.3),
-        legend.title = element_text(size=16, vjust = 0.3),
-        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
-print(e)
-
+source("C:/Users/choerstm/Documents/core_PS113/Genomics/RScripts/PL_betadiversity.R")
 
 ```
 
