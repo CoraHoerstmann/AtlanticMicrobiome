@@ -2,7 +2,7 @@
 
 Contributor: Cora Hoerstmann cora.hoerstmann@awi.de
 
-This is the github repository along our manuscript **"High-resolution oceanographic and microbial diversity analyses within trophic groups reveal new provincialism across the Atlantic Ocean"** 
+This is the github repository along our manuscript **"Microbial diversity through an oceanographic lens: refining the concept of ocean provinces through trophic-level analysis and productivity-specific length-scales"** 
 
 Cora Hörstmann, Pier Luigi Buttigieg, Uwe John, Eric Raes, Dieter Wolf-Gladrow, Anya M. Waite
 
