@@ -19,9 +19,7 @@ meta_auto_euk.PP$specific_PP <- meta_auto_euk.PP$PPAVG/meta_auto_euk.PP$chloroph
 ##abundance
 ASVCount_auto_euk.PP <- ASVCount_18S.tax.auto%>%dplyr::select(rownames(meta_auto_euk.PP))
 ASVCount_auto_euk.PP <- ASVCount_auto_euk.PP[rowSums(ASVCount_auto_euk.PP)>0,] #remove ASVs which are not abundant
-
-ASVCount_auto_euk.PP.hellinger <- ASVCount_18S.tax.auto.hellinger%>%dplyr::select(rownames(meta_auto_euk.PP))
-ASVCount_auto_euk.PP.hellinger <- ASVCount_auto_euk.PP.hellinger[rowSums(ASVCount_auto_euk.PP.hellinger)>0,] #remove ASVs which are not abundant
+ #remove ASVs which are not abundant
 
 ASVCount_auto_euk.PP.clr <- ASVCount_18S.tax.auto.clr%>%dplyr::select(rownames(meta_auto_euk.PP))
 ASVCount_auto_euk.PP.clr <- ASVCount_auto_euk.PP.clr[rowSums(ASVCount_auto_euk.PP.clr)>0,] #remove ASVs which are not abundant
@@ -46,8 +44,7 @@ meta_auto_cyano.PP$specific_PP <- meta_auto_cyano.PP$PPAVG/meta_auto_cyano.PP$ch
 ASVCount_auto_cyano.PP <- ASVCount_16S.tax.auto%>%dplyr::select(rownames(meta_auto_cyano.PP))
 ASVCount_auto_cyano.PP <- ASVCount_auto_cyano.PP[rowSums(ASVCount_auto_cyano.PP)>0,] #remove ASVs which are not abundant
 
-ASVCount_auto_cyano.PP.hellinger <- ASVCount_16S.tax.auto.hellinger%>%dplyr::select(rownames(meta_auto_cyano.PP))
-ASVCount_auto_cyano.PP.hellinger <- ASVCount_auto_cyano.PP.hellinger[rowSums(ASVCount_auto_cyano.PP.hellinger)>0,] #remove ASVs which are not abundant
+ #remove ASVs which are not abundant
 
 ASVCount_auto_cyano.PP.clr <- ASVCount_16S.tax.auto.clr%>%dplyr::select(rownames(meta_auto_cyano.PP))
 ASVCount_auto_cyano.PP.clr <- ASVCount_auto_cyano.PP.clr[rowSums(ASVCount_auto_cyano.PP.clr)>0,] #remove ASVs which are not abundant
@@ -71,9 +68,7 @@ meta_mixo.PP$specific_PP <- meta_mixo.PP$PPAVG/meta_mixo.PP$chlorophyll
 ##abundance
 ASVCount_mixo.PP <- ASVCount_mixo%>%dplyr::select(rownames(meta_mixo.PP))
 ASVCount_mixo.PP <- ASVCount_mixo.PP[rowSums(ASVCount_mixo.PP)>0,] #remove ASVs which are not abundant
-
-ASVCount_mixo.PP.hellinger <- ASVCount_mixo.hellinger%>%dplyr::select(rownames(meta_mixo.PP))
-ASVCount_mixo.PP.hellinger <- ASVCount_mixo.PP.hellinger[rowSums(ASVCount_mixo.PP.hellinger)>0,] #remove ASVs which are not abundant
+ #remove ASVs which are not abundant
 
 ASVCount_mixo.PP.clr <- ASVCount_mixo.clr%>%dplyr::select(rownames(meta_mixo.PP))
 ASVCount_mixo.PP.clr <- ASVCount_mixo.PP.clr[rowSums(ASVCount_mixo.PP.clr)>0,] #remove ASVs which are not abundant
@@ -96,9 +91,7 @@ meta_het_euk.PP$specific_PP <- meta_het_euk.PP$PPAVG/meta_het_euk.PP$chlorophyll
 ##abundance
 ASVCount_het_euk.PP <- ASVCount_18S.tax.het%>%dplyr::select(rownames(meta_het_euk.PP))
 ASVCount_het_euk.PP <- ASVCount_het_euk.PP[rowSums(ASVCount_het_euk.PP)>0,] #remove ASVs which are not abundant
-
-ASVCount_het_euk.PP.hellinger <- ASVCount_18S.tax.het.hellinger%>%dplyr::select(rownames(meta_het_euk.PP))
-ASVCount_het_euk.PP.hellinger <- ASVCount_het_euk.PP.hellinger[rowSums(ASVCount_het_euk.PP.hellinger)>0,] #remove ASVs which are not abundant
+ #remove ASVs which are not abundant
 
 ASVCount_het_euk.PP.clr <- ASVCount_18S.tax.het.clr%>%dplyr::select(rownames(meta_het_euk.PP))
 ASVCount_het_euk.PP.clr <- ASVCount_het_euk.PP.clr[rowSums(ASVCount_het_euk.PP.clr)>0,] #remove ASVs which are not abundant
@@ -120,9 +113,6 @@ meta_het_prok.PP$specific_PP <- meta_het_prok.PP$PPAVG/meta_het_prok.PP$chloroph
 ##abundance
 ASVCount_het_prok.PP <- ASVCount_16S.tax.het%>%dplyr::select(rownames(meta_het_prok.PP))
 ASVCount_het_prok.PP <- ASVCount_het_prok.PP[rowSums(ASVCount_het_prok.PP)>0,] #remove ASVs which are not abundant
-
-ASVCount_het_prok.PP.hellinger <- ASVCount_16S.tax.het.hellinger%>%dplyr::select(rownames(meta_het_prok.PP))
-ASVCount_het_prok.PP.hellinger <- ASVCount_het_prok.PP.hellinger[rowSums(ASVCount_het_prok.PP.hellinger)>0,] #remove ASVs which are not abundant
 
 ASVCount_het_prok.PP.clr <- ASVCount_16S.tax.het.clr%>%dplyr::select(rownames(meta_het_prok.PP))
 ASVCount_het_prok.PP.clr <- ASVCount_het_prok.PP.clr[rowSums(ASVCount_het_prok.PP.clr)>0,] #remove ASVs which are not abundant

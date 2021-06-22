@@ -11,16 +11,8 @@ corelation_plot <- function(meta, target_group){
 
 #REad in the data. In this case there are two columns for Zm. Run one examples. Get feedback from Eric, the run the final on all samples.
 
-sf <- as.data.frame(t(meta))
-sf$Var <- rownames(sf)
-sfc16s<- sf
-sfc16s.t <- as_data_frame(t(sfc16s))
-#make numeric
-sfc16s.t.n <- data.matrix(sfc16s.t)
-sfc16s.df <- as.data.frame(sfc16s.t.n)
-head(sfc16s.df)
-sfc16s = sfc16s.df
-sfc16s.cor<-cor(sfc16s[complete.cases(sfc16s),], method = "pearson")
+
+sfc16s.cor<-cor(meta[complete.cases(meta),], method = "pearson")
 colnames(sfc16s.cor) <- colnames(meta)
 rownames(sfc16s.cor) <- colnames(meta)
 
@@ -77,8 +69,8 @@ cor.mtest_corrected <- function(mat, ...) {
 
 
 
-sfc16s.pmat<-cor.mtest(sfc16s[complete.cases(sfc16s),])
-sfc16s.pmat.corrected<-cor.mtest_corrected(sfc16s[complete.cases(sfc16s),])
+sfc16s.pmat<-cor.mtest(meta[complete.cases(meta),])
+sfc16s.pmat.corrected<-cor.mtest_corrected(meta[complete.cases(meta),])
 
 #Add p values to correlelogram
 

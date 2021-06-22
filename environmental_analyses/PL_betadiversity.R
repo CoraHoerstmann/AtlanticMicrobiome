@@ -34,9 +34,9 @@ fig2 <- ggplot(data=PL_meta, aes(x=adcp_km_d, y=specific_PP,colour=province, fil
 
 #isoclines with PL
 
-require("plot3D")
-scatter3D(PL_meta$adcp_horiz, PL_meta$specific_PP, PL_meta$biomass_transport, phi = 0, bty = "g",  type = "h", 
-          ticktype = "detailed", pch = 19, cex = 0.5)
+#require("plot3D")
+#scatter3D(PL_meta$adcp_horiz, PL_meta$specific_PP, PL_meta$biomass_transport, phi = 0, bty = "g",  type = "h", 
+#          ticktype = "detailed", pch = 19, cex = 0.5)
 
 ##countourplot
 
@@ -46,9 +46,9 @@ soi.grid <- expand.grid(adcp_km_d = adcp_seq, specific_PP = PB_seq)
 soi.grid$PL <- (log(2)/(soi.grid$specific_PP/23))*(soi.grid$adcp_km_d)
 
 
-fig2a <- ggplot(data = PL_meta, aes(x = adcp_km_d, y = specific_PP)) + 
+fig2a <- ggplot(data = PL_meta, aes(x = (adcp_km_d*1000), y = specific_PP)) + 
   geom_point(aes(colour = province, fill=province))+
-  labs(x = "current speed", y = "specific PP")+
+  labs(x = "current speed [m d-1]", y = "specific PP [mg C m-3 d-1]")+
   scale_colour_manual(values=c("grey5","grey17","grey29", "grey41", "grey53", "grey17", "grey65", "grey77", "grey89",
                                "#A64995", "#BDD014", "#442D87", "#2B62FC", "#A331A0", "#720E34", "#CEC521", "#D80E51","#3FE8E0", "#E85105", "#E58910")) +
   scale_fill_manual(values=c("#A64995", "#BDD014", "#442D87", "#2B62FC", "#A331A0", "#720E34", "#CEC521", "#D80E51","#3FE8E0", "#E85105", "#E58910")) +
@@ -73,9 +73,9 @@ print(fig2a)
 #direct.label(a)
 
 # Convex hulls
-fig2b <- fig2 + geom_polygon(data=hulls, alpha=.2) 
+#fig2b <- fig2 + geom_polygon(data=hulls, alpha=.2) 
 
-print(fig2b)
+#print(fig2b)
 
 ###
 

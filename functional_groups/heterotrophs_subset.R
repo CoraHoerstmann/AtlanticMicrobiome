@@ -162,7 +162,6 @@ taxonomy_het_euk <- d
 #filter abundance table accordingly
 
 ASVCount_18S.tax.het <- ASVCount_18S.tax%>%filter(rownames(ASVCount_18S.tax) %in% rownames(d))
-ASVCount_18S.tax.het.hellinger <- ASVCount_18S.tax.hellinger%>%filter(rownames(ASVCount_18S.tax.hellinger) %in% rownames(d))
 ASVCount_18S.tax.het.clr <- ASVCount_18S.tax.clr%>%filter(rownames(ASVCount_18S.tax.clr) %in% rownames(d))
 
 
@@ -171,17 +170,11 @@ ASVCount_18S.tax.het.clr <- ASVCount_18S.tax.clr%>%filter(rownames(ASVCount_18S.
 colnames(ASVCount_18S.tax.het) <- gsub("_18_",".",colnames(ASVCount_18S.tax.het))
 colnames(ASVCount_18S.tax.het) <- gsub("_.*","",colnames(ASVCount_18S.tax.het))
 
-colnames(ASVCount_18S.tax.het.hellinger) <- gsub("_18_",".",colnames(ASVCount_18S.tax.het.hellinger))
-colnames(ASVCount_18S.tax.het.hellinger) <- gsub("_.*","",colnames(ASVCount_18S.tax.het.hellinger))
-
 colnames(ASVCount_18S.tax.het.clr) <- gsub("_18_",".",colnames(ASVCount_18S.tax.het.clr))
 colnames(ASVCount_18S.tax.het.clr) <- gsub("_.*","",colnames(ASVCount_18S.tax.het.clr))
 
 ASVCount_18S.tax$rownames <- NULL
 ASVCount_18S.tax.het$rownames <- NULL
-
-ASVCount_18S.tax.hellinger$rownames <- NULL
-ASVCount_18S.tax.het.hellinger$rownames <- NULL
 
 ASVCount_18S.tax.clr$rownames <- NULL
 ASVCount_18S.tax.het.clr$rownames <- NULL
@@ -196,7 +189,6 @@ rownames(taxonomy_het_prok) <- taxonomy_het_prok$rownames
 
 
 ASVCount_16S.tax.het <- ASVCount_16S.tax%>%filter(rownames(ASVCount_16S.tax) %in% rownames(taxonomy_het_prok))
-ASVCount_16S.tax.het.hellinger <- ASVCount_16S.tax.hellinger%>%filter(rownames(ASVCount_16S.tax.hellinger) %in% rownames(taxonomy_het_prok))
 ASVCount_16S.tax.het.clr <- ASVCount_16S.tax.clr%>%filter(rownames(ASVCount_16S.tax.clr) %in% rownames(taxonomy_het_prok))
 
 ASVCount_16S.tax.het$rownames <- NULL
@@ -204,8 +196,6 @@ ASVCount_16S.tax.het$rownames <- NULL
 colnames(ASVCount_16S.tax.het) <- gsub("_16_",".",colnames(ASVCount_16S.tax.het))
 colnames(ASVCount_16S.tax.het) <- gsub("_.*","",colnames(ASVCount_16S.tax.het))
 
-colnames(ASVCount_16S.tax.het.hellinger) <- gsub("_16_",".",colnames(ASVCount_16S.tax.het.hellinger))
-colnames(ASVCount_16S.tax.het.hellinger) <- gsub("_.*","",colnames(ASVCount_16S.tax.het.hellinger))
 
 colnames(ASVCount_16S.tax.het.clr) <- gsub("_16_",".",colnames(ASVCount_16S.tax.het.clr))
 colnames(ASVCount_16S.tax.het.clr) <- gsub("_.*","",colnames(ASVCount_16S.tax.het.clr))

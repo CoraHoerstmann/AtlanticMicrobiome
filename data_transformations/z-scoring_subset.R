@@ -34,11 +34,14 @@ meta_het_prok.PP.z <- meta_het_prok.PP
 meta_het_prok.PP.z[z_score_PP] <- lapply(meta_het_prok.PP.z[z_score_PP], function(x) {y <-scale(x, center = TRUE, scale = TRUE)})
 
 
+z_score_all <- c("salinity", "SST", "PO4_umol.l", "Si_umol.l", "NO2_umol.l", "NO3_umol.l", "oxygen.umol.l.", "Total.N..nmol.L.", "Total.C..nmol.L.", "C.N.Molar", "Distance_coast.km.","distance_to_province_boundary.km.", "chlorophyll", "Shannon.auto.euk", "Shannon.auto.cynao", "Shannon.mixo", "Shannon.het.euk", "Shannon.het.prok")
+z_score_PP_all <- c("salinity", "SST", "PO4_umol.l", "Si_umol.l", "NO2_umol.l", "NO3_umol.l", "oxygen.umol.l.", "Total.N..nmol.L.", "Total.C..nmol.L.", "C.N.Molar", "Distance_coast.km.",
+                    "distance_to_province_boundary.km.", "PPAVG", "chlorophyll", "Shannon.auto.euk", "Shannon.auto.cynao", "Shannon.mixo", "Shannon.het.euk", "Shannon.het.prok")
 #all functions
 meta_functions.z <- meta_functions
-meta_functions.z[z_score] <- lapply(meta_functions.z[z_score], function(x) {y <-scale(x, center = TRUE, scale = TRUE)})
+meta_functions.z[z_score_all] <- lapply(meta_functions.z[z_score_all], function(x) {y <-scale(x, center = TRUE, scale = TRUE)})
 
 meta_functions.PP.z <- meta_functions.PP
-meta_functions.PP.z[z_score_PP] <- lapply(meta_functions.PP.z[z_score_PP], function(x) {y <-scale(x, center = TRUE, scale = TRUE)})
+meta_functions.PP.z[z_score_PP_all] <- lapply(meta_functions.PP.z[z_score_PP_all], function(x) {y <-scale(x, center = TRUE, scale = TRUE)})
 
 rownames(meta_functions.z) <-meta_functions.z$Site

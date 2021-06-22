@@ -74,11 +74,9 @@ taxonomy_auto_euk <- d
 #filter abundance table accordingly
 
 ASVCount_18S.tax$rownames <- rownames(ASVCount_18S.tax)
-ASVCount_18S.tax.hellinger$rownames <- rownames(ASVCount_18S.tax.hellinger)
 ASVCount_18S.tax.clr$rownames <- rownames(ASVCount_18S.tax.clr)
 
 ASVCount_18S.tax.auto <- ASVCount_18S.tax%>%filter(rownames %in% rownames(d))
-ASVCount_18S.tax.auto.hellinger <- ASVCount_18S.tax.hellinger%>%filter(rownames %in% rownames(d))
 ASVCount_18S.tax.auto.clr <- ASVCount_18S.tax.clr%>%filter(rownames %in% rownames(d))
 
 #cut out the first part of the column names because there is the 18S identifier in there
@@ -86,17 +84,12 @@ ASVCount_18S.tax.auto.clr <- ASVCount_18S.tax.clr%>%filter(rownames %in% rowname
 colnames(ASVCount_18S.tax.auto) <- gsub("_18_",".",colnames(ASVCount_18S.tax.auto))
 colnames(ASVCount_18S.tax.auto) <- gsub("_.*","",colnames(ASVCount_18S.tax.auto))
 
-colnames(ASVCount_18S.tax.auto.hellinger) <- gsub("_18_",".",colnames(ASVCount_18S.tax.auto.hellinger))
-colnames(ASVCount_18S.tax.auto.hellinger) <- gsub("_.*","",colnames(ASVCount_18S.tax.auto.hellinger))
-
 colnames(ASVCount_18S.tax.auto.clr) <- gsub("_18_",".",colnames(ASVCount_18S.tax.auto.clr))
 colnames(ASVCount_18S.tax.auto.clr) <- gsub("_.*","",colnames(ASVCount_18S.tax.auto.clr))
 
 ASVCount_18S.tax$rownames <- NULL
-ASVCount_18S.tax.hellinger$rownames <- NULL
 ASVCount_18S.tax.clr$rownames <- NULL
 ASVCount_18S.tax.auto$rownames <- NULL
-ASVCount_18S.tax.auto.hellinger$rownames <- NULL
 ASVCount_18S.tax.auto.clr$rownames <- NULL
 
 ##Prokaryotes
@@ -109,15 +102,11 @@ taxonomy_Cyanobacteria <- mito_P%>%filter(str_detect(phylum, "Cyanobacteria"))%>
 rownames(taxonomy_Cyanobacteria) <- paste(taxonomy_Cyanobacteria$rownames)
 
 ASVCount_16S.tax.auto <- ASVCount_16S.tax%>%filter(rownames(ASVCount_16S.tax) %in% rownames(taxonomy_Cyanobacteria))
-ASVCount_16S.tax.auto.hellinger <- ASVCount_16S.tax.hellinger%>%filter(rownames(ASVCount_16S.tax.hellinger) %in% rownames(taxonomy_Cyanobacteria))
 ASVCount_16S.tax.auto.clr <- ASVCount_16S.tax.clr%>%filter(rownames(ASVCount_16S.tax.clr) %in% rownames(taxonomy_Cyanobacteria))
 
  
  colnames(ASVCount_16S.tax.auto) <- gsub("_16_",".",colnames(ASVCount_16S.tax.auto))
  colnames(ASVCount_16S.tax.auto) <- gsub("_.*","",colnames(ASVCount_16S.tax.auto))
- 
- colnames(ASVCount_16S.tax.auto.hellinger) <- gsub("_16_",".",colnames(ASVCount_16S.tax.auto.hellinger))
- colnames(ASVCount_16S.tax.auto.hellinger) <- gsub("_.*","",colnames(ASVCount_16S.tax.auto.hellinger))
  
  colnames(ASVCount_16S.tax.auto.clr) <- gsub("_16_",".",colnames(ASVCount_16S.tax.auto.clr))
  colnames(ASVCount_16S.tax.auto.clr) <- gsub("_.*","",colnames(ASVCount_16S.tax.auto.clr))

@@ -1,18 +1,16 @@
-#plot the PP data and calculate significance
+#plot the PP data
 
 
-p<- ggplot(N_averaged, aes(x=Lat, y=mean_c.fix)) + 
-  geom_bar(fill = "white",stat="identity", color="black", 
+p<- ggplot(N, aes(x=Lat, y=C.fixation_nmol.L.h)) + 
+  geom_point(fill = "white",stat="identity", color="black", 
            position=position_dodge(), width = 0.9) +
-  geom_errorbar(aes(ymin=mean_c.fix-std, ymax=mean_c.fix+std), width=.2,
-                position=position_dodge(.9)) +
   theme(axis.title.x = element_text(size=8, vjust = 0.3),
         axis.title.y = element_text(size=8, vjust = 0.3),
         axis.text.y = element_text(size=8, vjust = 0.3),
         axis.text.x = element_text(size=8, vjust = 0.3, angle = 90),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  labs(x = "Latitude [°N]", y = "C fix [umol L-1*h-1]")+
+  labs(x = "Latitude [°N]", y = "C fix [nmol L-1*h-1]")+
   scale_x_continuous(breaks=seq(-70,70,5))+
   scale_y_continuous(breaks=seq(0,500,100))
 print(p)

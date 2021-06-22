@@ -1,5 +1,5 @@
 
-ASV_PCA <- function(ASV_clr, meta){
+ASV_PCA <- function(meta){
 require(ggbiplot)
 require(vegan)
 data <- t(ASV_clr)

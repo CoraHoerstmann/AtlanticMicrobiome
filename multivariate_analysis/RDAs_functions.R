@@ -1,10 +1,11 @@
 
 RDA_plots <- function(meta, ASV.clr, ASV.aitchinson){
   
+  
   #load additional packages
   suppressPackageStartupMessages(require("ggords"))
   suppressPackageStartupMessages(require("vegan"))
-  require(PERMANOVA)
+  #require(PERMANOVA)
   library(gridExtra)
   require(raster)
 
@@ -126,9 +127,11 @@ print(inertia.rda.constrained.prop)
 
 #par(xpd=TRUE)
 #provinces
-print(ggrda(ASV.clr.rda,group = grl, spearrow = NULL, farrow = 0.1, fzoom = 5, ellipse = T, scaling = 2, spe = F)+
+print(ggrda(ASV.clr.rda, group = grl, spearrow = NULL, farrow = 0.1, fzoom = 5, ellipse = T, scaling = 2, spe = F)+
   scale_color_manual(name = "Groups",values = c("#A64995", "#BDD014", "#442D87", "#2B62FC", "#A331A0", "#720E34", "#CEC521", "#D80E51","#3FE8E0", "#E85105", "#E58910")) +
   scale_shape_manual(name = "Groups",values = c(16,16,16,16,16,16,16,16,16,16,16))) #for station names include: obslab = T, obssize = 2
+
+return(ASV.clr.rda)
 
 #province PERMANOVA
 #ASV.ait.t <- t(ASV.aitchinson)
@@ -145,10 +148,11 @@ m_H_CHL <- meta%>%dplyr::filter(province %in% H_CHL)%>%cbind(chl_type = paste0("
 
 meta_c <- rbind(m_L_CHL, m_H_CHL)
 
-ASV.aitchinson_r <- as.matrix(ASV.aitchinson)
+ASV.aitchinson_r <- as.data.frame(as.matrix(ASV.aitchinson))
 ASV.aitchinson_r <- ASV.aitchinson_r%>%dplyr::select(meta_c$Site)
+ASV.aitchinson_r <- ASV.aitchinson_r%>%dplyr::filter(rownames(ASV.aitchinson_r) %in% meta_c$Site)
 print(adonis2(
-  formula = ASV.aitchinson ~ chl_type,
+  formula = ASV.aitchinson_r ~ chl_type,
   data = meta_c,
   method = "euclidean"
 ))
@@ -164,7 +168,7 @@ print(mod)
 #clean up!
 detach("package:vegan", unload=TRUE)
 detach("package:ggords", unload=TRUE)
-
+#detach("package:PERMANOVA", unload=TRUE)
 }
 
 

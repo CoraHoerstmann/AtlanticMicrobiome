@@ -126,14 +126,11 @@ rownames(taxonomy_mixo) <- taxonomy_mixo$rownames
 
 #filter abundance table accordingly
 ASVCount_18S.tax$rownames <- rownames(ASVCount_18S.tax)
-ASVCount_18S.tax.hellinger$rownames <- rownames(ASVCount_18S.tax.hellinger)
 ASVCount_18S.tax.clr$rownames <- rownames(ASVCount_18S.tax.clr)
 ASVCount_mixo <- ASVCount_18S.tax%>%filter(rownames %in% rownames(taxonomy_mixo))
-ASVCount_mixo.hellinger <- ASVCount_18S.tax.hellinger%>%filter(rownames %in% rownames(taxonomy_mixo))
 ASVCount_mixo.clr <- ASVCount_18S.tax.clr%>%filter(rownames %in% rownames(taxonomy_mixo))
 
 ASVCount_mixo$rownames <- NULL
-ASVCount_mixo.hellinger$rownames <- NULL
 ASVCount_mixo.clr$rownames <- NULL
 
 #cut out the first part of the column names because there is the 18S identifier in there
@@ -141,9 +138,6 @@ ASVCount_mixo.clr$rownames <- NULL
 
 colnames(ASVCount_mixo) <- gsub("_18_",".",colnames(ASVCount_mixo))
 colnames(ASVCount_mixo) <- gsub("_.*","",colnames(ASVCount_mixo))
-
-colnames(ASVCount_mixo.hellinger) <- gsub("_18_",".",colnames(ASVCount_mixo.hellinger))
-colnames(ASVCount_mixo.hellinger) <- gsub("_.*","",colnames(ASVCount_mixo.hellinger))
 
 colnames(ASVCount_mixo.clr) <- gsub("_18_",".",colnames(ASVCount_mixo.clr))
 colnames(ASVCount_mixo.clr) <- gsub("_.*","",colnames(ASVCount_mixo.clr))
@@ -162,7 +156,7 @@ rm(Chrysophyceae, Dino_mixo_Takaya, Dino_mixo_Noctiluca, Dino_mixo_Margalefidini
    Dino_mixo_Dinophysis, Dino_mixo_Symbiodinium, Dino_mixo_Tripos, Dino_mixo_Goniodoma,
    Dino_mixo_Fragilidium, Dino_mixo_Scrippsiella, Dino_mixo_Gonyaulax, Dino_mixo_Alexandrium_andersonii,
    Dino_mixo_Amphidinium_gibbosum, Acanthochiasma, Acanthostaurus, Amphilonche_elongata,
-   Symphyacanthida, Chlorarachniophyceae, Spirotontonia, Pseudotontonia)
+   Symphyacanthida, Chlorarachniophyceae, Spirotontonia, Pseudotontonia, Strombidium)
 
 detach("package:tidyverse", unload=TRUE)
 

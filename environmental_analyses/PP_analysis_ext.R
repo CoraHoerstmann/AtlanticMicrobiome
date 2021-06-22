@@ -15,7 +15,7 @@ N_av_sub <- N%>%
 
 N_averaged <- inner_join(N_av, N_av_sub[c(1:7,11, 15:18, 20)], by = "Station")
 
-rm(N_av, N_av_sub, N)
+rm(N_av, N_av_sub)
 
 ##calculate the biomass transport
 #log = ln in R by default!
